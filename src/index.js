@@ -1,13 +1,25 @@
+import "dotenv/config";
 import { Telegraf } from "telegraf";
 import sharp from "sharp";
 import { createCanvas, loadImage, registerFont } from "canvas";
 import fs from "fs";
 import path from "path";
 import { createImage } from "./createimage.js";
-
+import express from "express";
 // const { createCanvas, loadImage } = require( "canvas" );
 // const fs = require("fs");
-const bot = new Telegraf("6757884333:AAEoyhCrTs-RPQY2Kfjl8UBGrx-YJGHfuWw");
+const bot_token = process.env.BOT_TOKEN;
+const bot = new Telegraf(bot_token);
+
+const app = express();
+app.use(express.json());
+
+app.post("/webhook", async (req, res) => {
+  bot.handleUpdate(req.body, res);
+});
+
+const url = process.env.RENDER_EXTERNAL_URL || process.env.WEBHOOK;
+bot.telegram.setWebhook(url + "/webhook");
 
 bot.start((ctx) => {
   ctx.reply(
@@ -43,6 +55,11 @@ bot.on("text", async (ctx) => {
   //   });
 });
 
-bot.launch((ctx) => {
-  console.log("bot running");
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
 });
+
+// bot.launch((ctx) => {
+//   console.log("bot running");
+// });
