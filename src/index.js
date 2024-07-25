@@ -1,6 +1,5 @@
 import "dotenv/config";
 import { Telegraf } from "telegraf";
-import sharp from "sharp";
 import { createCanvas, loadImage, registerFont } from "canvas";
 import fs from "fs";
 import path from "path";

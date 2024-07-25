@@ -1,6 +1,5 @@
 import { createCanvas, loadImage, registerFont } from "canvas";
 import fs from "fs";
-import sharp from "sharp";
 
 import path from "path";
 
