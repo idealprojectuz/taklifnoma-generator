@@ -13,6 +13,12 @@ const bot = new Telegraf(bot_token);
 const app = express();
 app.use(express.json());
 
+app.get("/cron", (req, res) => {
+  const now = new Date();
+  const dateTime = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+  res.send(dateTime);
+});
+
 app.post("/webhook", async (req, res) => {
   bot.handleUpdate(req.body, res);
 });
